@@ -375,14 +375,14 @@ async def main():
     # Run benchmarks
     benchmark_results = {}
     for url in available_servers:
-        benchmark_results[url] = await run_benchmark(url, num_requests=100, concurrent=10)
         await asyncio.sleep(1)  # Brief pause between servers
+        benchmark_results[url] = await run_benchmark(url, num_requests=1000, concurrent=100)
     
     # Run stress tests
     stress_results = {}
     for url in available_servers:
-        stress_results[url] = await stress_test(url, duration_seconds=10, concurrent=50)
         await asyncio.sleep(1)  # Brief pause between servers
+        stress_results[url] = await stress_test(url, duration_seconds=10, concurrent=200)
     
     # Compare results if multiple servers were tested
     if len(available_servers) > 1:
@@ -393,3 +393,4 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
