@@ -5,241 +5,12 @@ OS Type                - 64 bit
 ------------- RUNTIME -------------
 Node.js                - 24.13
 Deno                   - 2.6
+Bun                    - 1.3
 Python                 - 3.12
 
 
-####################################################################################################################
-
-------------- FIRST RUN -------------
-
-======================================================================
-SERVER PERFORMANCE TESTING
-======================================================================
-
-Checking server availability...
-  Node.js (native http): ✅ Running
-  Deno (native): ✅ Running
-
-2 server(s) available for testing.
-
-
-======================================================================
-API Performance Benchmark - Node.js (native http)
-======================================================================
-Target: http://localhost:3001
-Total Requests per Operation: 1000
-Concurrent Requests: 100
-======================================================================
-
-Test 1: CREATE operations...
-Test 2: GET ALL operations...
-Test 3: GET ONE operations...
-Test 4: UPDATE operations...
-Test 5: DELETE operations...
-
-======================================================================
-Results - Node.js (native http)
-======================================================================
-
-CREATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     128.52 ms
-  Median Duration:   132.22 ms
-  Min Duration:      77.12 ms
-  Max Duration:      161.45 ms
-  Std Deviation:     22.18 ms
-  Requests/sec:      7.78
-
-GET_ALL:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     95.49 ms
-  Median Duration:   95.88 ms
-  Min Duration:      38.17 ms
-  Max Duration:      154.70 ms
-  Std Deviation:     36.79 ms
-  Requests/sec:      10.47
-
-GET_ONE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     89.08 ms
-  Median Duration:   89.76 ms
-  Min Duration:      59.35 ms
-  Max Duration:      117.63 ms
-  Std Deviation:     16.90 ms
-  Requests/sec:      11.23
-
-UPDATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     83.06 ms
-  Median Duration:   82.99 ms
-  Min Duration:      55.18 ms
-  Max Duration:      108.70 ms
-  Std Deviation:     16.27 ms
-  Requests/sec:      12.04
-
-DELETE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     79.79 ms
-  Median Duration:   82.02 ms
-  Min Duration:      59.01 ms
-  Max Duration:      100.24 ms
-  Std Deviation:     10.61 ms
-  Requests/sec:      12.53
-
-======================================================================
-Overall Summary
-======================================================================
-Total Requests:        5000
-Successful Requests:   5000
-Failed Requests:       0
-Total Duration:        475937.00 ms
-Average Duration:      95.19 ms
-Overall Throughput:    10.51 req/sec
-======================================================================
-
-
-======================================================================
-API Performance Benchmark - Deno (native)
-======================================================================
-Target: http://localhost:3002
-Total Requests per Operation: 1000
-Concurrent Requests: 100
-======================================================================
-
-Test 1: CREATE operations...
-Test 2: GET ALL operations...
-Test 3: GET ONE operations...
-Test 4: UPDATE operations...
-Test 5: DELETE operations...
-
-======================================================================
-Results - Deno (native)
-======================================================================
-
-CREATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     95.20 ms
-  Median Duration:   95.75 ms
-  Min Duration:      58.18 ms
-  Max Duration:      126.89 ms
-  Std Deviation:     20.45 ms
-  Requests/sec:      10.50
-
-GET_ALL:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     100.61 ms
-  Median Duration:   104.52 ms
-  Min Duration:      53.94 ms
-  Max Duration:      143.22 ms
-  Std Deviation:     27.66 ms
-  Requests/sec:      9.94
-
-GET_ONE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     57.93 ms
-  Median Duration:   58.36 ms
-  Min Duration:      40.91 ms
-  Max Duration:      75.12 ms
-  Std Deviation:     10.45 ms
-  Requests/sec:      17.26
-
-UPDATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     95.53 ms
-  Median Duration:   98.17 ms
-  Min Duration:      67.52 ms
-  Max Duration:      117.91 ms
-  Std Deviation:     14.87 ms
-  Requests/sec:      10.47
-
-DELETE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     63.23 ms
-  Median Duration:   63.72 ms
-  Min Duration:      41.46 ms
-  Max Duration:      84.12 ms
-  Std Deviation:     12.47 ms
-  Requests/sec:      15.82
-
-======================================================================
-Overall Summary
-======================================================================
-Total Requests:        5000
-Successful Requests:   5000
-Failed Requests:       0
-Total Duration:        412498.50 ms
-Average Duration:      82.50 ms
-Overall Throughput:    12.12 req/sec
-======================================================================
-
-
-======================================================================
-Stress Test - Node.js (native http)
-======================================================================
-Target: http://localhost:3001
-Duration: 10 seconds
-Concurrent Workers: 200
-======================================================================
-
-Stress Test Results:
-  Total Requests:    66564
-  Successful:        66564
-  Failed:            0
-  Total Time:        10.09 seconds
-  Requests/sec:      6596.77
-  Mean Duration:     30.14 ms
-  Median Duration:   15.07 ms
-  Min Duration:      1.95 ms
-  Max Duration:      10046.35 ms
-  Std Deviation:     387.61 ms
-======================================================================
-
-
-======================================================================
-Stress Test - Deno (native)
-======================================================================
-Target: http://localhost:3002
-Duration: 10 seconds
-Concurrent Workers: 200
-======================================================================
-
-Stress Test Results:
-  Total Requests:    77600
-  Successful:        77600
-  Failed:            0
-  Total Time:        10.10 seconds
-  Requests/sec:      7681.71
-  Mean Duration:     25.90 ms
-  Median Duration:   12.93 ms
-  Min Duration:      2.91 ms
-  Max Duration:      10044.93 ms
-  Std Deviation:     359.66 ms
-======================================================================
-
-
-======================================================================
-COMPARISON SUMMARY
-======================================================================
+#########################################################################################
+--------------------------------------- FIRST RUN ---------------------------------------
 
 Benchmark Results Comparison:
 ======================================================================
@@ -247,285 +18,56 @@ Benchmark Results Comparison:
 CREATE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     128.52       132.22       7.78        
-  Deno (native)             95.20        95.75        10.50       
-  🏆 Winner: Deno (native)
+  Node.js (native http)     122.39       122.89       8.17        
+  Deno (native)             92.98        93.87        10.75       
+  Bun (native)              89.59        89.61        11.16       
+  🏆 Winner: Bun (native)
 
 GET_ALL:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     95.49        95.88        10.47       
-  Deno (native)             100.61       104.52       9.94        
-  🏆 Winner: Node.js (native http)
+  Node.js (native http)     93.04        92.79        10.75       
+  Deno (native)             99.61        103.28       10.04       
+  Bun (native)              77.55        77.86        12.90       
+  🏆 Winner: Bun (native)
 
 GET_ONE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     89.08        89.76        11.23       
-  Deno (native)             57.93        58.36        17.26       
+  Node.js (native http)     84.29        86.92        11.86       
+  Deno (native)             60.23        60.91        16.60       
+  Bun (native)              63.44        63.56        15.76       
   🏆 Winner: Deno (native)
 
 UPDATE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     83.06        82.99        12.04       
-  Deno (native)             95.53        98.17        10.47       
-  🏆 Winner: Node.js (native http)
+  Node.js (native http)     79.45        79.51        12.59       
+  Deno (native)             87.55        88.82        11.42       
+  Bun (native)              67.72        67.95        14.77       
+  🏆 Winner: Bun (native)
 
 DELETE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     79.79        82.02        12.53       
-  Deno (native)             63.23        63.72        15.82       
-  🏆 Winner: Deno (native)
+  Node.js (native http)     75.27        75.86        13.28       
+  Deno (native)             62.20        62.65        16.08       
+  Bun (native)              56.75        57.18        17.62       
+  🏆 Winner: Bun (native)
 
 
 Stress Test Comparison:
 ======================================================================
   Server                    Req/sec      Mean (ms)    Success Rate   
   -----------------------------------------------------------------
-  Node.js (native http)     6596.77      30.14        100.0          %
-  Deno (native)             7681.71      25.90        100.0          %
-  🏆 Winner: Deno (native)
-
-======================================================================
-
-
-✅ All tests completed!
+  Node.js (native http)     7376.26      26.98        100.0          %
+  Deno (native)             7707.10      25.81        100.0          %
+  Bun (native)              8318.50      23.92        100.0          %
+  🏆 Winner: Bun (native)
 
 
-####################################################################################################################
-
-------------- SECOND RUN -------------
-
-======================================================================
-SERVER PERFORMANCE TESTING
-======================================================================
-
-Checking server availability...
-  Node.js (native http): ✅ Running
-  Deno (native): ✅ Running
-
-2 server(s) available for testing.
-
-
-======================================================================
-API Performance Benchmark - Node.js (native http)
-======================================================================
-Target: http://localhost:3001
-Total Requests per Operation: 1000
-Concurrent Requests: 100
-======================================================================
-
-Test 1: CREATE operations...
-Test 2: GET ALL operations...
-Test 3: GET ONE operations...
-Test 4: UPDATE operations...
-Test 5: DELETE operations...
-
-======================================================================
-Results - Node.js (native http)
-======================================================================
-
-CREATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     97.78 ms
-  Median Duration:   98.51 ms
-  Min Duration:      74.69 ms
-  Max Duration:      120.37 ms
-  Std Deviation:     12.09 ms
-  Requests/sec:      10.23
-
-GET_ALL:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     119.30 ms
-  Median Duration:   116.40 ms
-  Min Duration:      39.11 ms
-  Max Duration:      220.89 ms
-  Std Deviation:     56.14 ms
-  Requests/sec:      8.38
-
-GET_ONE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     84.81 ms
-  Median Duration:   87.89 ms
-  Min Duration:      61.30 ms
-  Max Duration:      106.80 ms
-  Std Deviation:     12.90 ms
-  Requests/sec:      11.79
-
-UPDATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     77.72 ms
-  Median Duration:   77.83 ms
-  Min Duration:      53.93 ms
-  Max Duration:      100.02 ms
-  Std Deviation:     13.67 ms
-  Requests/sec:      12.87
-
-DELETE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     75.68 ms
-  Median Duration:   76.83 ms
-  Min Duration:      58.48 ms
-  Max Duration:      91.99 ms
-  Std Deviation:     8.81 ms
-  Requests/sec:      13.21
-
-======================================================================
-Overall Summary
-======================================================================
-Total Requests:        5000
-Successful Requests:   5000
-Failed Requests:       0
-Total Duration:        455283.69 ms
-Average Duration:      91.06 ms
-Overall Throughput:    10.98 req/sec
-======================================================================
-
-
-======================================================================
-API Performance Benchmark - Deno (native)
-======================================================================
-Target: http://localhost:3002
-Total Requests per Operation: 1000
-Concurrent Requests: 100
-======================================================================
-
-Test 1: CREATE operations...
-Test 2: GET ALL operations...
-Test 3: GET ONE operations...
-Test 4: UPDATE operations...
-Test 5: DELETE operations...
-
-======================================================================
-Results - Deno (native)
-======================================================================
-
-CREATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     87.69 ms
-  Median Duration:   86.89 ms
-  Min Duration:      61.37 ms
-  Max Duration:      114.42 ms
-  Std Deviation:     16.76 ms
-  Requests/sec:      11.40
-
-GET_ALL:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     114.29 ms
-  Median Duration:   117.20 ms
-  Min Duration:      54.64 ms
-  Max Duration:      177.84 ms
-  Std Deviation:     38.18 ms
-  Requests/sec:      8.75
-
-GET_ONE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     67.97 ms
-  Median Duration:   68.79 ms
-  Min Duration:      44.37 ms
-  Max Duration:      91.43 ms
-  Std Deviation:     14.32 ms
-  Requests/sec:      14.71
-
-UPDATE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     87.25 ms
-  Median Duration:   87.60 ms
-  Min Duration:      71.00 ms
-  Max Duration:      101.57 ms
-  Std Deviation:     7.63 ms
-  Requests/sec:      11.46
-
-DELETE:
-  Total Requests:    1000
-  Successful:        1000
-  Failed:            0
-  Mean Duration:     60.93 ms
-  Median Duration:   60.85 ms
-  Min Duration:      41.08 ms
-  Max Duration:      80.95 ms
-  Std Deviation:     11.96 ms
-  Requests/sec:      16.41
-
-======================================================================
-Overall Summary
-======================================================================
-Total Requests:        5000
-Successful Requests:   5000
-Failed Requests:       0
-Total Duration:        418130.65 ms
-Average Duration:      83.63 ms
-Overall Throughput:    11.96 req/sec
-======================================================================
-
-
-======================================================================
-Stress Test - Node.js (native http)
-======================================================================
-Target: http://localhost:3001
-Duration: 10 seconds
-Concurrent Workers: 200
-======================================================================
-
-Stress Test Results:
-  Total Requests:    68800
-  Successful:        68800
-  Failed:            0
-  Total Time:        10.09 seconds
-  Requests/sec:      6820.13
-  Mean Duration:     29.17 ms
-  Median Duration:   14.47 ms
-  Min Duration:      4.96 ms
-  Max Duration:      10026.27 ms
-  Std Deviation:     381.28 ms
-======================================================================
-
-
-======================================================================
-Stress Test - Deno (native)
-======================================================================
-Target: http://localhost:3002
-Duration: 10 seconds
-Concurrent Workers: 200
-======================================================================
-
-Stress Test Results:
-  Total Requests:    73200
-  Successful:        73200
-  Failed:            0
-  Total Time:        10.07 seconds
-  Requests/sec:      7266.70
-  Mean Duration:     27.38 ms
-  Median Duration:   13.68 ms
-  Min Duration:      2.68 ms
-  Max Duration:      10018.51 ms
-  Std Deviation:     369.32 ms
-======================================================================
-
-
-======================================================================
-COMPARISON SUMMARY
-======================================================================
+##########################################################################################
+--------------------------------------- SECOND RUN ---------------------------------------
 
 Benchmark Results Comparison:
 ======================================================================
@@ -533,36 +75,41 @@ Benchmark Results Comparison:
 CREATE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     97.78        98.51        10.23       
-  Deno (native)             87.69        86.89        11.40       
+  Node.js (native http)     95.89        96.84        10.43       
+  Deno (native)             84.54        83.24        11.83       
+  Bun (native)              88.44        87.74        11.31       
   🏆 Winner: Deno (native)
 
 GET_ALL:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     119.30       116.40       8.38        
-  Deno (native)             114.29       117.20       8.75        
+  Node.js (native http)     120.64       118.34       8.29        
+  Deno (native)             111.57       114.52       8.96        
+  Bun (native)              132.96       130.21       7.52        
   🏆 Winner: Deno (native)
 
 GET_ONE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     84.81        87.89        11.79       
-  Deno (native)             67.97        68.79        14.71       
+  Node.js (native http)     80.25        81.92        12.46       
+  Deno (native)             65.57        66.04        15.25       
+  Bun (native)              73.57        72.88        13.59       
   🏆 Winner: Deno (native)
 
 UPDATE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     77.72        77.83        12.87       
-  Deno (native)             87.25        87.60        11.46       
-  🏆 Winner: Node.js (native http)
+  Node.js (native http)     75.24        75.27        13.29       
+  Deno (native)             82.71        82.77        12.09       
+  Bun (native)              73.59        73.18        13.59       
+  🏆 Winner: Bun (native)
 
 DELETE:
   Server                    Mean (ms)    Median (ms)  Req/sec     
   ------------------------------------------------------------
-  Node.js (native http)     75.68        76.83        13.21       
-  Deno (native)             60.93        60.85        16.41       
+  Node.js (native http)     72.16        72.51        13.86       
+  Deno (native)             58.81        58.77        17.00       
+  Bun (native)              63.55        62.74        15.74       
   🏆 Winner: Deno (native)
 
 
@@ -570,11 +117,65 @@ Stress Test Comparison:
 ======================================================================
   Server                    Req/sec      Mean (ms)    Success Rate   
   -----------------------------------------------------------------
-  Node.js (native http)     6820.13      29.17        100.0          %
-  Deno (native)             7266.70      27.38        100.0          %
-  🏆 Winner: Deno (native)
+  Node.js (native http)     7392.49      26.92        100.0          %
+  Deno (native)             7314.29      27.20        100.0          %
+  Bun (native)              7920.28      25.11        100.0          %
+  🏆 Winner: Bun (native)
 
+
+#########################################################################################
+--------------------------------------- THIRD RUN ---------------------------------------
+
+Benchmark Results Comparison:
 ======================================================================
 
+CREATE:
+  Server                    Mean (ms)    Median (ms)  Req/sec     
+  ------------------------------------------------------------
+  Node.js (native http)     97.14        98.20        10.29       
+  Deno (native)             82.67        82.45        12.10       
+  Bun (native)              90.14        90.47        11.09       
+  🏆 Winner: Deno (native)
 
-✅ All tests completed!
+GET_ALL:
+  Server                    Mean (ms)    Median (ms)  Req/sec     
+  ------------------------------------------------------------
+  Node.js (native http)     130.23       127.48       7.68        
+  Deno (native)             114.65       119.48       8.72        
+  Bun (native)              140.69       137.37       7.11        
+  🏆 Winner: Deno (native)
+
+GET_ONE:
+  Server                    Mean (ms)    Median (ms)  Req/sec     
+  ------------------------------------------------------------
+  Node.js (native http)     81.96        83.72        12.20       
+  Deno (native)             68.81        70.18        14.53       
+  Bun (native)              72.73        72.69        13.75       
+  🏆 Winner: Deno (native)
+
+UPDATE:
+  Server                    Mean (ms)    Median (ms)  Req/sec     
+  ------------------------------------------------------------
+  Node.js (native http)     76.52        76.43        13.07       
+  Deno (native)             84.50        84.79        11.83       
+  Bun (native)              73.42        73.03        13.62       
+  🏆 Winner: Bun (native)
+
+DELETE:
+  Server                    Mean (ms)    Median (ms)  Req/sec     
+  ------------------------------------------------------------
+  Node.js (native http)     73.80        74.36        13.55       
+  Deno (native)             59.59        59.77        16.78       
+  Bun (native)              63.58        62.22        15.73       
+  🏆 Winner: Deno (native)
+
+
+Stress Test Comparison:
+======================================================================
+  Server                    Req/sec      Mean (ms)    Success Rate   
+  -----------------------------------------------------------------
+  Node.js (native http)     7376.69      26.97        100.0          %
+  Deno (native)             7724.90      25.76        100.0          %
+  Bun (native)              8191.69      24.28        100.0          %
+  🏆 Winner: Bun (native)
+
