@@ -1,5 +1,5 @@
 // Fake database
-const users = [];
+const users = new Map();
 let nextId = 1;
 
 // Helper to send JSON response
@@ -31,19 +31,23 @@ const handler = async (req) => {
         email,
       };
 
-      users.push(user);
+      users.set(user.id, user);
       return sendJSON(201, user);
     }
 
     // GET /users - READ ALL
     if (method === "GET" && path === "/users") {
-      return sendJSON(200, users);
+      const limit = Number(url.searchParams.get("limit") ?? 100);
+      const offset = Number(url.searchParams.get("offset") ?? 0);
+
+      const usersArray = Array.from(users.values());
+      return sendJSON(200, usersArray.slice(offset, offset + limit));
     }
 
     // GET /users/:id - READ ONE
     if (method === "GET" && path.startsWith("/users/")) {
       const id = Number(path.split("/")[2]);
-      const user = users.find((u) => u.id === id);
+      const user = users.get(id);
 
       if (!user) {
         return sendJSON(404, { message: "User not found" });
@@ -55,7 +59,7 @@ const handler = async (req) => {
     // PUT /users/:id - UPDATE
     if (method === "PUT" && path.startsWith("/users/")) {
       const id = Number(path.split("/")[2]);
-      const user = users.find((u) => u.id === id);
+      const user = users.get(id);
 
       if (!user) {
         return sendJSON(404, { message: "User not found" });
@@ -72,13 +76,13 @@ const handler = async (req) => {
     // DELETE /users/:id - DELETE
     if (method === "DELETE" && path.startsWith("/users/")) {
       const id = Number(path.split("/")[2]);
-      const index = users.findIndex((u) => u.id === id);
+      const user = users.get(id);
 
-      if (index === -1) {
+      if (!user) {
         return sendJSON(404, { message: "User not found" });
       }
 
-      users.splice(index, 1);
+      users.delete(id);
       return new Response(null, { status: 204 });
     }
 
