@@ -27,7 +27,7 @@ async def create_user(session: aiohttp.ClientSession, base_url: str, user_id: in
         ) as response:
             data = await response.json()
             duration = time.perf_counter() - start
-            return {"operation": "CREATE", "status": response.status, "duration": duration, "success": True}
+            return {"operation": "CREATE", "status": response.status, "duration": duration, "success": True, "data": data}
     except Exception as e:
         duration = time.perf_counter() - start
         return {"operation": "CREATE", "status": 0, "duration": duration, "success": False, "error": str(e)}
@@ -40,7 +40,7 @@ async def get_all_users(session: aiohttp.ClientSession, base_url: str) -> Dict:
         async with session.get(f"{base_url}/users") as response:
             data = await response.json()
             duration = time.perf_counter() - start
-            return {"operation": "GET_ALL", "status": response.status, "duration": duration, "success": True}
+            return {"operation": "GET_ALL", "status": response.status, "duration": duration, "success": True, "data": data}
     except Exception as e:
         duration = time.perf_counter() - start
         return {"operation": "GET_ALL", "status": 0, "duration": duration, "success": False, "error": str(e)}
@@ -53,7 +53,7 @@ async def get_user(session: aiohttp.ClientSession, base_url: str, user_id: int) 
         async with session.get(f"{base_url}/users/{user_id}") as response:
             data = await response.json()
             duration = time.perf_counter() - start
-            return {"operation": "GET_ONE", "status": response.status, "duration": duration, "success": True}
+            return {"operation": "GET_ONE", "status": response.status, "duration": duration, "success": True, "data": data}
     except Exception as e:
         duration = time.perf_counter() - start
         return {"operation": "GET_ONE", "status": 0, "duration": duration, "success": False, "error": str(e)}
@@ -69,7 +69,7 @@ async def update_user(session: aiohttp.ClientSession, base_url: str, user_id: in
         ) as response:
             data = await response.json()
             duration = time.perf_counter() - start
-            return {"operation": "UPDATE", "status": response.status, "duration": duration, "success": True}
+            return {"operation": "UPDATE", "status": response.status, "duration": duration, "success": True, "data": data}
     except Exception as e:
         duration = time.perf_counter() - start
         return {"operation": "UPDATE", "status": 0, "duration": duration, "success": False, "error": str(e)}
@@ -112,28 +112,48 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
     async with aiohttp.ClientSession() as session:
         # Test 1: CREATE users concurrently
         print("Test 1: CREATE operations...")
-        tasks = [create_user(session, base_url, i) for i in range(num_requests)]
-        create_results = await asyncio.gather(*tasks)
+        tasks = [create_user(session, base_url, i + 1) for i in range(num_requests)]
+        create_results = []
+        for i in range(0, num_requests, concurrent):
+            batch_tasks = tasks[i:i+concurrent]
+            batch_results = await asyncio.gather(*batch_tasks)
+            create_results.extend(batch_results)
         
         # Test 2: GET all users
         print("Test 2: GET ALL operations...")
         tasks = [get_all_users(session, base_url) for _ in range(num_requests)]
-        get_all_results = await asyncio.gather(*tasks)
+        get_all_results = []
+        for i in range(0, num_requests, concurrent):
+            batch_tasks = tasks[i:i+concurrent]
+            batch_results = await asyncio.gather(*batch_tasks)
+            get_all_results.extend(batch_results)
         
         # Test 3: GET individual users
         print("Test 3: GET ONE operations...")
-        tasks = [get_user(session, base_url, i % num_requests + 1) for i in range(num_requests)]
-        get_one_results = await asyncio.gather(*tasks)
+        tasks = [get_user(session, base_url, result["data"]["id"]) for result in create_results]
+        get_one_results = []
+        for i in range(0, num_requests, concurrent):
+            batch_tasks = tasks[i:i+concurrent]
+            batch_results = await asyncio.gather(*batch_tasks)
+            get_one_results.extend(batch_results)
         
         # Test 4: UPDATE users
         print("Test 4: UPDATE operations...")
-        tasks = [update_user(session, base_url, i % num_requests + 1) for i in range(num_requests)]
-        update_results = await asyncio.gather(*tasks)
+        tasks = [update_user(session, base_url, result["data"]["id"]) for result in create_results]
+        update_results = []
+        for i in range(0, num_requests, concurrent):
+            batch_tasks = tasks[i:i+concurrent]
+            batch_results = await asyncio.gather(*batch_tasks)
+            update_results.extend(batch_results)
         
         # Test 5: DELETE users
         print("Test 5: DELETE operations...")
-        tasks = [delete_user(session, base_url, i + 1) for i in range(num_requests)]
-        delete_results = await asyncio.gather(*tasks)
+        tasks = [delete_user(session, base_url, result["data"]["id"]) for result in create_results]
+        delete_results = []
+        for i in range(0, num_requests, concurrent):
+            batch_tasks = tasks[i:i+concurrent]
+            batch_results = await asyncio.gather(*batch_tasks)
+            delete_results.extend(batch_results)
 
     # Combine all results
     all_results = {
@@ -224,27 +244,27 @@ async def stress_test(base_url: str, duration_seconds: int = 10, concurrent: int
     print(f"Concurrent Workers: {concurrent}")
     print(f"{'='*70}\n")
 
-    results = []
     start_time = time.perf_counter()
-    user_id = 1000  # Start from 1000 to avoid conflicts with benchmark
+    current_id = 1
+    results = []
 
     async def worker(session: aiohttp.ClientSession):
-        nonlocal user_id
+        nonlocal current_id
         while time.perf_counter() - start_time < duration_seconds:
             # Perform a mix of operations
-            current_id = user_id
-            user_id += 1
-            
             result = await create_user(session, base_url, current_id)
             results.append(result)
+
+            user_id = result["data"]["id"]
+            current_id += 1
             
-            result = await get_user(session, base_url, current_id)
+            result = await get_user(session, base_url, user_id)
             results.append(result)
             
-            result = await update_user(session, base_url, current_id)
+            result = await update_user(session, base_url, user_id)
             results.append(result)
             
-            result = await delete_user(session, base_url, current_id)
+            result = await delete_user(session, base_url, user_id)
             results.append(result)
 
     async with aiohttp.ClientSession() as session:
