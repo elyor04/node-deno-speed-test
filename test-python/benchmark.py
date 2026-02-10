@@ -112,56 +112,66 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
     async with aiohttp.ClientSession() as session:
         # Test 1: CREATE users concurrently
         print("Test 1: CREATE operations...")
+        operation_start = time.perf_counter()
         tasks = [create_user(session, base_url, i + 1) for i in range(num_requests)]
         create_results = []
         for i in range(0, num_requests, concurrent):
             batch_tasks = tasks[i:i+concurrent]
             batch_results = await asyncio.gather(*batch_tasks)
             create_results.extend(batch_results)
+        create_wall_time = time.perf_counter() - operation_start
         
         # Test 2: GET all users
         print("Test 2: GET ALL operations...")
+        operation_start = time.perf_counter()
         tasks = [get_all_users(session, base_url) for _ in range(num_requests)]
         get_all_results = []
         for i in range(0, num_requests, concurrent):
             batch_tasks = tasks[i:i+concurrent]
             batch_results = await asyncio.gather(*batch_tasks)
             get_all_results.extend(batch_results)
+        get_all_wall_time = time.perf_counter() - operation_start
         
         # Test 3: GET individual users
         print("Test 3: GET ONE operations...")
-        tasks = [get_user(session, base_url, result["data"]["id"]) for result in create_results]
+        operation_start = time.perf_counter()
+        tasks = [get_user(session, base_url, result["data"]["id"]) for result in create_results if result["success"]]
         get_one_results = []
-        for i in range(0, num_requests, concurrent):
+        for i in range(0, len(tasks), concurrent):
             batch_tasks = tasks[i:i+concurrent]
             batch_results = await asyncio.gather(*batch_tasks)
             get_one_results.extend(batch_results)
+        get_one_wall_time = time.perf_counter() - operation_start
         
         # Test 4: UPDATE users
         print("Test 4: UPDATE operations...")
-        tasks = [update_user(session, base_url, result["data"]["id"]) for result in create_results]
+        operation_start = time.perf_counter()
+        tasks = [update_user(session, base_url, result["data"]["id"]) for result in create_results if result["success"]]
         update_results = []
-        for i in range(0, num_requests, concurrent):
+        for i in range(0, len(tasks), concurrent):
             batch_tasks = tasks[i:i+concurrent]
             batch_results = await asyncio.gather(*batch_tasks)
             update_results.extend(batch_results)
+        update_wall_time = time.perf_counter() - operation_start
         
         # Test 5: DELETE users
         print("Test 5: DELETE operations...")
-        tasks = [delete_user(session, base_url, result["data"]["id"]) for result in create_results]
+        operation_start = time.perf_counter()
+        tasks = [delete_user(session, base_url, result["data"]["id"]) for result in create_results if result["success"]]
         delete_results = []
-        for i in range(0, num_requests, concurrent):
+        for i in range(0, len(tasks), concurrent):
             batch_tasks = tasks[i:i+concurrent]
             batch_results = await asyncio.gather(*batch_tasks)
             delete_results.extend(batch_results)
+        delete_wall_time = time.perf_counter() - operation_start
 
-    # Combine all results
+    # Combine all results with wall times
     all_results = {
-        "CREATE": create_results,
-        "GET_ALL": get_all_results,
-        "GET_ONE": get_one_results,
-        "UPDATE": update_results,
-        "DELETE": delete_results,
+        "CREATE": (create_results, create_wall_time),
+        "GET_ALL": (get_all_results, get_all_wall_time),
+        "GET_ONE": (get_one_results, get_one_wall_time),
+        "UPDATE": (update_results, update_wall_time),
+        "DELETE": (delete_results, delete_wall_time),
     }
 
     # Print statistics
@@ -170,8 +180,10 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
     print(f"{'='*70}\n")
 
     operation_stats = {}
+    total_wall_time = 0
     
-    for operation, results in all_results.items():
+    for operation, (results, wall_time) in all_results.items():
+        total_wall_time += wall_time
         successful_results = [r for r in results if r["success"]]
         
         if not successful_results:
@@ -182,6 +194,9 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
             
         durations = [r["duration"] * 1000 for r in successful_results]  # Convert to ms
         
+        # Calculate requests/sec using wall-clock time
+        req_per_sec = len(successful_results) / wall_time if wall_time > 0 else 0
+        
         stats = {
             "total": len(results),
             "successful": len(successful_results),
@@ -191,7 +206,8 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
             "min": min(durations),
             "max": max(durations),
             "stdev": statistics.stdev(durations) if len(durations) > 1 else 0,
-            "req_per_sec": len(successful_results) / sum(durations) * 1000
+            "req_per_sec": req_per_sec,
+            "wall_time": wall_time
         }
         
         operation_stats[operation] = stats
@@ -200,6 +216,7 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
         print(f"  Total Requests:    {stats['total']}")
         print(f"  Successful:        {stats['successful']}")
         print(f"  Failed:            {stats['failed']}")
+        print(f"  Wall Time:         {stats['wall_time']:.3f} s")
         print(f"  Mean Duration:     {stats['mean']:.2f} ms")
         print(f"  Median Duration:   {stats['median']:.2f} ms")
         print(f"  Min Duration:      {stats['min']:.2f} ms")
@@ -209,24 +226,26 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
         print()
 
     # Overall statistics
-    all_durations = []
-    for results in all_results.values():
-        all_durations.extend([r["duration"] * 1000 for r in results if r["success"]])
+    total_requests = sum(len(results) for results, _ in all_results.values())
+    total_successful = sum(len([r for r in results if r["success"]]) for results, _ in all_results.values())
 
-    if all_durations:
-        total_requests = sum(len(results) for results in all_results.values())
-        total_successful = len(all_durations)
-        total_time = sum(all_durations) / 1000  # Convert back to seconds
-
+    if total_successful > 0:
         print(f"{'='*70}")
         print("Overall Summary")
         print(f"{'='*70}")
         print(f"Total Requests:        {total_requests}")
         print(f"Successful Requests:   {total_successful}")
         print(f"Failed Requests:       {total_requests - total_successful}")
-        print(f"Total Duration:        {sum(all_durations):.2f} ms")
-        print(f"Average Duration:      {statistics.mean(all_durations):.2f} ms")
-        print(f"Overall Throughput:    {total_successful / total_time:.2f} req/sec")
+        print(f"Total Wall Time:       {total_wall_time:.3f} s")
+        print(f"Overall Throughput:    {total_successful / total_wall_time:.2f} req/sec")
+        
+        # Calculate average duration across all successful requests
+        all_durations = []
+        for results, _ in all_results.values():
+            all_durations.extend([r["duration"] * 1000 for r in results if r["success"]])
+        
+        if all_durations:
+            print(f"Average Duration:      {statistics.mean(all_durations):.2f} ms")
         print(f"{'='*70}\n")
 
     return operation_stats
@@ -245,27 +264,33 @@ async def stress_test(base_url: str, duration_seconds: int = 10, concurrent: int
     print(f"{'='*70}\n")
 
     start_time = time.perf_counter()
-    current_id = 1
+    id_lock = asyncio.Lock()
+    current_id = 0
     results = []
 
     async def worker(session: aiohttp.ClientSession):
         nonlocal current_id
         while time.perf_counter() - start_time < duration_seconds:
+            # Get unique ID
+            async with id_lock:
+                current_id += 1
+                worker_id = current_id
+            
             # Perform a mix of operations
-            result = await create_user(session, base_url, current_id)
+            result = await create_user(session, base_url, worker_id)
             results.append(result)
 
-            user_id = result["data"]["id"]
-            current_id += 1
-            
-            result = await get_user(session, base_url, user_id)
-            results.append(result)
-            
-            result = await update_user(session, base_url, user_id)
-            results.append(result)
-            
-            result = await delete_user(session, base_url, user_id)
-            results.append(result)
+            if result["success"]:
+                user_id = result["data"]["id"]
+                
+                result = await get_user(session, base_url, user_id)
+                results.append(result)
+                
+                result = await update_user(session, base_url, user_id)
+                results.append(result)
+                
+                result = await delete_user(session, base_url, user_id)
+                results.append(result)
 
     async with aiohttp.ClientSession() as session:
         workers = [worker(session) for _ in range(concurrent)]
