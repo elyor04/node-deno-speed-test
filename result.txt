@@ -1,4 +1,16 @@
-(.venv) user@user-Quieter-4C:~/Documents/node-deno-speed-test/test-python$ python benchmark.py
+------------- SYSTEM -------------
+OS Name                - Ubuntu 24.04
+OS Type                - 64 bit
+
+------------- RUNTIME -------------
+Node.js                - 24.13
+Deno                   - 2.6
+Python                 - 3.12
+
+
+####################################################################################################################
+
+------------- FIRST RUN -------------
 
 ======================================================================
 SERVER PERFORMANCE TESTING
@@ -281,7 +293,10 @@ Stress Test Comparison:
 
 ✅ All tests completed!
 
-(.venv) user@user-Quieter-4C:~/Documents/node-deno-speed-test/test-python$ python benchmark.py
+
+####################################################################################################################
+
+------------- SECOND RUN -------------
 
 ======================================================================
 SERVER PERFORMANCE TESTING
@@ -563,5 +578,3 @@ Stress Test Comparison:
 
 
 ✅ All tests completed!
-
-
