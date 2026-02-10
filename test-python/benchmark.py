@@ -7,11 +7,13 @@ import statistics
 URLS = [
     "http://localhost:3001",  # Node.js
     "http://localhost:3002",  # Deno
+    "http://localhost:3003",  # Bun
 ]
 
 SERVER_NAMES = {
     "http://localhost:3001": "Node.js (native http)",
     "http://localhost:3002": "Deno (native)",
+    "http://localhost:3003": "Bun (native)",
 }
 
 
