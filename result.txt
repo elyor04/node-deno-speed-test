@@ -16,54 +16,54 @@ Benchmark Results Comparison:
 ======================================================================
 
 CREATE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     12.38        9.58         4701.86     
-  Deno (native)             9.65         7.87         5872.80     
-  Bun (native)              10.63        8.81         5717.61     
-  🏆 Winner: Deno (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     5004.72      11.67      8.94       33.25      42.59     
+  Deno (native)             5504.08      11.42      9.36       27.78      30.84     
+  Bun (native)              6420.71      9.18       7.09       24.46      27.36     
+  🏆 Winner (Best Mean): Bun (native)
 
 GET_ALL:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     11.93        11.09        4741.78     
-  Deno (native)             11.65        10.32        5146.23     
-  Bun (native)              10.34        10.12        5308.11     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     4760.39      11.93      11.04      22.15      23.99     
+  Deno (native)             4876.12      12.14      10.98      22.65      23.44     
+  Bun (native)              5714.55      9.47       8.88       12.41      21.42     
+  🏆 Winner (Best Mean): Bun (native)
 
 GET_ONE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     8.75         8.59         6781.07     
-  Deno (native)             8.08         8.03         7377.80     
-  Bun (native)              7.96         7.83         7526.76     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     7058.58      8.36       8.27       10.66      13.82     
+  Deno (native)             8454.40      6.47       6.37       8.59       10.98     
+  Bun (native)              8596.93      6.27       6.07       8.39       11.67     
+  🏆 Winner (Best Mean): Bun (native)
 
 UPDATE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     10.11        9.56         5499.78     
-  Deno (native)             11.72        10.79        5110.38     
-  Bun (native)              9.78         8.94         5917.80     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     5486.50      9.98       9.64       13.45      24.88     
+  Deno (native)             5546.51      9.55       9.25       13.23      24.65     
+  Bun (native)              6449.86      7.94       7.39       12.03      22.52     
+  🏆 Winner (Best Mean): Bun (native)
 
 DELETE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     7.50         7.44         7912.84     
-  Deno (native)             7.02         6.89         8411.97     
-  Bun (native)              7.03         6.97         8475.75     
-  🏆 Winner: Deno (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     7751.78      7.72       7.59       11.04      12.56     
+  Deno (native)             9158.63      6.04       5.99       8.59       11.38     
+  Bun (native)              9734.62      5.55       5.47       8.00       10.26     
+  🏆 Winner (Best Mean): Bun (native)
 
 
 Stress Test Comparison:
 ======================================================================
-  Server                    Req/sec      Mean (ms)    Success Rate   
-  -----------------------------------------------------------------
-  Node.js (native http)     7293.07      27.28        100.0          %
-  Deno (native)             7149.87      27.82        100.0          %
-  Bun (native)              8112.82      24.51        100.0          %
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99        Success   
+  -------------------------------------------------------------------------------------
+  Node.js (native http)     7384.35      26.94      13.40      15.70      16.65      100.0     %
+  Deno (native)             7143.38      27.84      13.75      16.36      17.57      100.0     %
+  Bun (native)              8213.77      24.22      12.07      13.45      14.26      100.0     %
+  🏆 Winner (Best Throughput): Bun (native)
 
 
 ##########################################################################################
@@ -73,54 +73,54 @@ Benchmark Results Comparison:
 ======================================================================
 
 CREATE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     11.13        8.46         5599.88     
-  Deno (native)             11.47        9.38         5602.97     
-  Bun (native)              8.97         6.89         6579.88     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     5849.05      10.46      8.31       27.37      30.67     
+  Deno (native)             6082.87      9.92       7.82       25.26      28.10     
+  Bun (native)              6551.12      8.98       6.88       24.27      27.07     
+  🏆 Winner (Best Mean): Bun (native)
 
 GET_ALL:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     11.33        10.39        5163.94     
-  Deno (native)             12.40        11.73        4803.90     
-  Bun (native)              9.03         8.42         5907.45     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     5096.19      11.50      10.55      22.20      23.69     
+  Deno (native)             5092.81      11.07      10.49      21.16      21.97     
+  Bun (native)              5771.54      9.32       8.70       11.22      21.41     
+  🏆 Winner (Best Mean): Bun (native)
 
 GET_ONE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     8.09         7.99         7370.71     
-  Deno (native)             6.36         6.23         8549.55     
-  Bun (native)              6.11         5.97         8867.18     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     8237.83      6.70       6.63       8.67       11.86     
+  Deno (native)             7613.18      7.66       7.57       9.89       12.09     
+  Bun (native)              7811.93      7.46       7.28       9.46       13.29     
+  🏆 Winner (Best Mean): Node.js (native http)
 
 UPDATE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     9.96         9.65         5575.98     
-  Deno (native)             9.59         9.27         5576.72     
-  Bun (native)              7.75         7.20         6585.65     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     6138.56      8.37       8.07       11.52      23.15     
+  Deno (native)             5101.37      11.10      10.78      14.85      26.26     
+  Bun (native)              5927.94      9.17       8.59       13.33      24.10     
+  🏆 Winner (Best Mean): Node.js (native http)
 
 DELETE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     7.45         7.37         8135.22     
-  Deno (native)             5.86         5.79         9430.09     
-  Bun (native)              5.55         5.50         9779.53     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     9322.91      5.96       5.91       8.46       10.30     
+  Deno (native)             8407.65      7.09       7.02       9.75       12.70     
+  Bun (native)              8650.31      6.84       6.75       9.43       11.42     
+  🏆 Winner (Best Mean): Node.js (native http)
 
 
 Stress Test Comparison:
 ======================================================================
-  Server                    Req/sec      Mean (ms)    Success Rate   
-  -----------------------------------------------------------------
-  Node.js (native http)     7732.85      25.72        100.0          %
-  Deno (native)             7424.48      26.80        100.0          %
-  Bun (native)              7743.11      25.67        100.0          %
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99        Success   
+  -------------------------------------------------------------------------------------
+  Node.js (native http)     7564.03      26.30      13.05      15.43      16.42      100.0     %
+  Deno (native)             7348.70      27.07      13.40      16.13      17.39      100.0     %
+  Bun (native)              7904.13      25.15      12.42      14.34      15.21      100.0     %
+  🏆 Winner (Best Throughput): Bun (native)
 
 
 #########################################################################################
@@ -130,52 +130,52 @@ Benchmark Results Comparison:
 ======================================================================
 
 CREATE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     10.40        8.25         5869.87     
-  Deno (native)             10.14        7.19         6160.28     
-  Bun (native)              9.21         6.74         6391.59     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     5818.55      10.51      8.39       26.91      30.30     
+  Deno (native)             6383.47      9.57       7.29       25.26      28.04     
+  Bun (native)              6545.07      9.02       6.98       24.47      27.35     
+  🏆 Winner (Best Mean): Bun (native)
 
 GET_ALL:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     11.31        10.42        5170.12     
-  Deno (native)             10.86        10.10        5222.88     
-  Bun (native)              9.55         8.65         5796.15     
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     5088.28      11.54      10.58      22.34      23.51     
+  Deno (native)             5145.48      10.99      10.11      21.27      22.08     
+  Bun (native)              5743.48      9.37       8.60       12.01      21.39     
+  🏆 Winner (Best Mean): Bun (native)
 
 GET_ONE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     6.67         6.55         8282.66     
-  Deno (native)             6.53         6.39         8540.50     
-  Bun (native)              7.65         7.56         7785.35     
-  🏆 Winner: Deno (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     8285.49      6.66       6.55       8.64       11.91     
+  Deno (native)             8588.29      6.33       6.22       8.42       10.97     
+  Bun (native)              8426.79      6.45       6.27       8.45       11.93     
+  🏆 Winner (Best Mean): Deno (native)
 
 UPDATE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     8.38         8.06         6119.64     
-  Deno (native)             10.48        9.44         5642.53     
-  Bun (native)              9.98         8.92         6080.67     
-  🏆 Winner: Node.js (native http)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     6135.44      8.37       8.08       11.47      23.64     
+  Deno (native)             5629.95      9.50       9.20       13.15      24.43     
+  Bun (native)              6595.51      7.74       7.21       11.81      22.60     
+  🏆 Winner (Best Mean): Bun (native)
 
 DELETE:
-  Server                    Mean (ms)    Median (ms)  Req/sec     
-  ------------------------------------------------------------
-  Node.js (native http)     6.00         5.94         9289.38     
-  Deno (native)             5.62         5.56         9644.06     
-  Bun (native)              7.12         7.06         8441.78     
-  🏆 Winner: Deno (native)
+  Server                    Req/sec      Mean       Median     P95        P99       
+  ---------------------------------------------------------------------------
+  Node.js (native http)     9262.36      6.04       5.99       8.88       10.37     
+  Deno (native)             9501.76      5.80       5.73       8.37       11.08     
+  Bun (native)              9669.36      5.58       5.52       8.03       9.75      
+  🏆 Winner (Best Mean): Bun (native)
 
 
 Stress Test Comparison:
 ======================================================================
-  Server                    Req/sec      Mean (ms)    Success Rate   
-  -----------------------------------------------------------------
-  Node.js (native http)     7483.37      26.57        100.0          %
-  Deno (native)             7265.35      27.38        100.0          %
-  Bun (native)              7906.92      25.14        100.0          %
-  🏆 Winner: Bun (native)
+  Server                    Req/sec      Mean       Median     P95        P99        Success   
+  -------------------------------------------------------------------------------------
+  Node.js (native http)     7506.48      26.50      13.12      15.68      16.77      100.0     %
+  Deno (native)             7267.91      27.36      13.51      16.18      18.59      100.0     %
+  Bun (native)              7970.86      24.94      12.34      14.27      15.30      100.0     %
+  🏆 Winner (Best Throughput): Bun (native)
 
