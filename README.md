@@ -1,5 +1,4 @@
 # Node.js vs Deno vs Bun: Performance Benchmark
-[![Ask DeepWiki](https://devin.ai/assets/askdeepwiki.png)](https://deepwiki.com/elyor04/node-deno-speed-test)
 
 This repository provides a performance comparison between Node.js, Deno, and Bun for a simple in-memory CRUD (Create, Read, Update, Delete) API. The benchmark measures requests per second, latency, and overall throughput of these JavaScript runtimes using their native HTTP servers.
 
