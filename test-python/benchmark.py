@@ -17,6 +17,22 @@ SERVER_NAMES = {
 }
 
 
+def calculate_percentile(data: List[float], percentile: float) -> float:
+    """Calculate percentile value from a list of numbers"""
+    if not data:
+        return 0
+    sorted_data = sorted(data)
+    index = (percentile / 100) * (len(sorted_data) - 1)
+    lower = int(index)
+    upper = lower + 1
+    
+    if upper >= len(sorted_data):
+        return sorted_data[-1]
+    
+    weight = index - lower
+    return sorted_data[lower] * (1 - weight) + sorted_data[upper] * weight
+
+
 async def create_user(session: aiohttp.ClientSession, base_url: str, user_id: int) -> Dict:
     """Create a user"""
     start = time.perf_counter()
@@ -197,6 +213,10 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
         # Calculate requests/sec using wall-clock time
         req_per_sec = len(successful_results) / wall_time if wall_time > 0 else 0
         
+        # Calculate percentiles
+        p95 = calculate_percentile(durations, 95)
+        p99 = calculate_percentile(durations, 99)
+        
         stats = {
             "total": len(results),
             "successful": len(successful_results),
@@ -205,6 +225,8 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
             "median": statistics.median(durations),
             "min": min(durations),
             "max": max(durations),
+            "p95": p95,
+            "p99": p99,
             "stdev": statistics.stdev(durations) if len(durations) > 1 else 0,
             "req_per_sec": req_per_sec,
             "wall_time": wall_time
@@ -217,12 +239,14 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
         print(f"  Successful:        {stats['successful']}")
         print(f"  Failed:            {stats['failed']}")
         print(f"  Wall Time:         {stats['wall_time']:.3f} s")
+        print(f"  Requests/sec:      {stats['req_per_sec']:.2f}")
         print(f"  Mean Duration:     {stats['mean']:.2f} ms")
         print(f"  Median Duration:   {stats['median']:.2f} ms")
         print(f"  Min Duration:      {stats['min']:.2f} ms")
         print(f"  Max Duration:      {stats['max']:.2f} ms")
+        print(f"  P95:               {stats['p95']:.2f} ms")
+        print(f"  P99:               {stats['p99']:.2f} ms")
         print(f"  Std Deviation:     {stats['stdev']:.2f} ms")
-        print(f"  Requests/sec:      {stats['req_per_sec']:.2f}")
         print()
 
     # Overall statistics
@@ -245,7 +269,11 @@ async def run_benchmark(base_url: str, num_requests: int = 100, concurrent: int 
             all_durations.extend([r["duration"] * 1000 for r in results if r["success"]])
         
         if all_durations:
+            overall_p95 = calculate_percentile(all_durations, 95)
+            overall_p99 = calculate_percentile(all_durations, 99)
             print(f"Average Duration:      {statistics.mean(all_durations):.2f} ms")
+            print(f"Overall P95:           {overall_p95:.2f} ms")
+            print(f"Overall P99:           {overall_p99:.2f} ms")
         print(f"{'='*70}\n")
 
     return operation_stats
@@ -305,6 +333,10 @@ async def stress_test(base_url: str, duration_seconds: int = 10, concurrent: int
         
     durations = [r["duration"] * 1000 for r in successful_results]
     total_time = time.perf_counter() - start_time
+    
+    # Calculate percentiles
+    p95 = calculate_percentile(durations, 95)
+    p99 = calculate_percentile(durations, 99)
 
     stats = {
         "total": len(results),
@@ -316,6 +348,8 @@ async def stress_test(base_url: str, duration_seconds: int = 10, concurrent: int
         "median": statistics.median(durations),
         "min": min(durations),
         "max": max(durations),
+        "p95": p95,
+        "p99": p99,
         "stdev": statistics.stdev(durations) if len(durations) > 1 else 0
     }
 
@@ -329,6 +363,8 @@ async def stress_test(base_url: str, duration_seconds: int = 10, concurrent: int
     print(f"  Median Duration:   {stats['median']:.2f} ms")
     print(f"  Min Duration:      {stats['min']:.2f} ms")
     print(f"  Max Duration:      {stats['max']:.2f} ms")
+    print(f"  P95:               {stats['p95']:.2f} ms")
+    print(f"  P99:               {stats['p99']:.2f} ms")
     print(f"  Std Deviation:     {stats['stdev']:.2f} ms")
     print(f"{'='*70}\n")
     
@@ -349,8 +385,8 @@ async def compare_servers(benchmark_results: Dict, stress_results: Dict):
     
     for operation in operations:
         print(f"\n{operation}:")
-        print(f"  {'Server':<25} {'Mean (ms)':<12} {'Median (ms)':<12} {'Req/sec':<12}")
-        print(f"  {'-'*60}")
+        print(f"  {'Server':<25} {'Req/sec':<12} {'Mean':<10} {'Median':<10} {'P95':<10} {'P99':<10}")
+        print(f"  {'-'*75}")
         
         best_mean = float('inf')
         best_server = None
@@ -359,21 +395,21 @@ async def compare_servers(benchmark_results: Dict, stress_results: Dict):
             if url in benchmark_results and operation in benchmark_results[url]:
                 stats = benchmark_results[url][operation]
                 server_name = SERVER_NAMES.get(url, url)
-                print(f"  {server_name:<25} {stats['mean']:<12.2f} {stats['median']:<12.2f} {stats['req_per_sec']:<12.2f}")
+                print(f"  {server_name:<25} {stats['req_per_sec']:<12.2f} {stats['mean']:<10.2f} {stats['median']:<10.2f} {stats['p95']:<10.2f} {stats['p99']:<10.2f}")
                 
                 if stats['mean'] < best_mean:
                     best_mean = stats['mean']
                     best_server = server_name
         
         if best_server:
-            print(f"  🏆 Winner: {best_server}")
+            print(f"  🏆 Winner (Best Mean): {best_server}")
     
     # Stress test comparison
     if stress_results:
         print(f"\n\nStress Test Comparison:")
         print(f"{'='*70}")
-        print(f"  {'Server':<25} {'Req/sec':<12} {'Mean (ms)':<12} {'Success Rate':<15}")
-        print(f"  {'-'*65}")
+        print(f"  {'Server':<25} {'Req/sec':<12} {'Mean':<10} {'Median':<10} {'P95':<10} {'P99':<10} {'Success':<10}")
+        print(f"  {'-'*85}")
         
         best_throughput = 0
         best_server = None
@@ -383,14 +419,14 @@ async def compare_servers(benchmark_results: Dict, stress_results: Dict):
                 stats = stress_results[url]
                 server_name = SERVER_NAMES.get(url, url)
                 success_rate = (stats['successful'] / stats['total']) * 100 if stats['total'] > 0 else 0
-                print(f"  {server_name:<25} {stats['req_per_sec']:<12.2f} {stats['mean']:<12.2f} {success_rate:<15.1f}%")
+                print(f"  {server_name:<25} {stats['req_per_sec']:<12.2f} {stats['mean']:<10.2f} {stats['median']:<10.2f} {stats['p95']:<10.2f} {stats['p99']:<10.2f} {success_rate:<10.1f}%")
                 
                 if stats['req_per_sec'] > best_throughput:
                     best_throughput = stats['req_per_sec']
                     best_server = server_name
         
         if best_server:
-            print(f"  🏆 Winner: {best_server}")
+            print(f"  🏆 Winner (Best Throughput): {best_server}")
     
     print(f"\n{'='*70}\n")
 
