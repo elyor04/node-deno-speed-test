@@ -71,4 +71,6 @@ app.delete("/users/:id", (c) => {
   return c.body(null, 204);
 });
 
-serve({ fetch: app.fetch, port: PORT });
+serve({ fetch: app.fetch, port: PORT }, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+});

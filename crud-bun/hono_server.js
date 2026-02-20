@@ -71,3 +71,4 @@ app.delete("/users/:id", (c) => {
 });
 
 Bun.serve({ port: PORT, fetch: app.fetch });
+console.log(`Server is running on http://localhost:${PORT}`);

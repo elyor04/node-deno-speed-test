@@ -95,5 +95,4 @@ const handler = async (req) => {
 
 // Start server
 const PORT = 3002;
-console.log(`🚀 Server running on http://localhost:${PORT}`);
 Deno.serve({ port: PORT }, handler);

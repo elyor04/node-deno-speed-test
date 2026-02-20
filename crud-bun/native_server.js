@@ -95,5 +95,5 @@ const handler = async (req) => {
 
 // Start server
 const PORT = 3003;
-console.log(`🚀 Server running on http://localhost:${PORT}`);
 Bun.serve({ port: PORT, fetch: handler });
+console.log(`Server is running on http://localhost:${PORT}`);

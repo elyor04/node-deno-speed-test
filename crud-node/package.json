@@ -1,10 +1,13 @@
 {
+  "type": "module",
   "scripts": {
     "native:server": "node native_server.js",
-    "hono:server": "node hono_server.js"
+    "hono:server": "node hono_server.js",
+    "express:server": "node express_server.js"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.9",
+    "express": "^5.2.1",
     "hono": "^4.12.0"
   }
 }
