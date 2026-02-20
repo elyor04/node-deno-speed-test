@@ -20,7 +20,7 @@ The benchmark was run three times to ensure consistency. The results below are f
 #### CREATE
 | Server | Req/sec | Mean (ms) | Median (ms) | P95 (ms) | P99 (ms) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Node.js (native http) | 5216.25 | 11.88 | 8.96 | 35.75 | 40.97 |
+| Node.js (native) | 5216.25 | 11.88 | 8.96 | 35.75 | 40.97 |
 | Deno (native) | 6390.26 | 9.53 | 7.35 | 25.74 | 28.51 |
 | Bun (native) | 6444.51 | 9.45 | 7.13 | 25.77 | 28.73 |
 | Node.js (hono) | 3124.10 | 14.44 | 9.97 | 51.76 | 65.50 |
@@ -34,7 +34,7 @@ The benchmark was run three times to ensure consistency. The results below are f
 #### GET ALL
 | Server | Req/sec | Mean (ms) | Median (ms) | P95 (ms) | P99 (ms) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Node.js (native http) | 4704.90 | 12.06 | 11.20 | 22.47 | 24.75 |
+| Node.js (native) | 4704.90 | 12.06 | 11.20 | 22.47 | 24.75 |
 | Deno (native) | 5058.63 | 11.21 | 10.65 | 21.49 | 22.41 |
 | Bun (native) | 5685.70 | 9.25 | 8.78 | 11.46 | 21.74 |
 | Node.js (hono) | 4344.08 | 11.40 | 10.86 | 18.22 | 25.59 |
@@ -48,7 +48,7 @@ The benchmark was run three times to ensure consistency. The results below are f
 #### GET ONE
 | Server | Req/sec | Mean (ms) | Median (ms) | P95 (ms) | P99 (ms) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Node.js (native http) | 7056.71 | 8.41 | 8.32 | 10.58 | 13.69 |
+| Node.js (native) | 7056.71 | 8.41 | 8.32 | 10.58 | 13.69 |
 | Deno (native) | 8456.73 | 6.46 | 6.35 | 8.60 | 10.71 |
 | Bun (native) | 8611.29 | 6.38 | 6.25 | 8.77 | 11.10 |
 | Node.js (hono) | 6929.98 | 7.45 | 7.14 | 9.86 | 12.89 |
@@ -62,7 +62,7 @@ The benchmark was run three times to ensure consistency. The results below are f
 #### UPDATE
 | Server | Req/sec | Mean (ms) | Median (ms) | P95 (ms) | P99 (ms) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Node.js (native http) | 5422.39 | 10.15 | 9.85 | 13.51 | 25.00 |
+| Node.js (native) | 5422.39 | 10.15 | 9.85 | 13.51 | 25.00 |
 | Deno (native) | 5607.63 | 9.46 | 9.12 | 13.16 | 24.03 |
 | Bun (native) | 6470.43 | 8.10 | 7.33 | 14.32 | 23.01 |
 | Node.js (hono) | 4265.21 | 10.92 | 9.66 | 24.02 | 27.59 |
@@ -76,7 +76,7 @@ The benchmark was run three times to ensure consistency. The results below are f
 #### DELETE
 | Server | Req/sec | Mean (ms) | Median (ms) | P95 (ms) | P99 (ms) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| Node.js (native http) | 7599.38 | 7.97 | 7.90 | 10.98 | 13.21 |
+| Node.js (native) | 7599.38 | 7.97 | 7.90 | 10.98 | 13.21 |
 | Deno (native) | 9387.87 | 5.90 | 5.79 | 8.42 | 11.16 |
 | Bun (native) | 9621.06 | 5.64 | 5.54 | 8.08 | 10.55 |
 | Node.js (hono) | 8069.69 | 6.76 | 6.74 | 9.79 | 11.51 |
@@ -93,7 +93,7 @@ This test bombards the servers with continuous requests for 10 seconds using 200
 
 | Server | Req/sec | Mean (ms) | Median (ms) | P95 (ms) | P99 (ms) | Success |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| Node.js (native http) | 7283.72 | 27.30 | 13.54 | 15.89 | 16.99 | 100.0 % |
+| Node.js (native) | 7283.72 | 27.30 | 13.54 | 15.89 | 16.99 | 100.0 % |
 | Deno (native) | 7269.01 | 27.36 | 13.55 | 16.22 | 17.27 | 100.0 % |
 | Bun (native) | 8094.92 | 24.55 | 12.21 | 13.94 | 15.16 | 100.0 % |
 | Node.js (hono) | 5669.49 | 35.06 | 17.53 | 19.86 | 21.76 | 100.0 % |
@@ -125,58 +125,58 @@ You need to open separate terminal windows to run each server concurrently.
 - **Node.js Server (native):**
   ```bash
   cd crud-node
-  npm start
+  npm run native:server
   ```
 - **Deno Server (native):**
   ```bash
   cd crud-deno
-  deno task start
+  deno task native:server
   ```
 - **Bun Server (native):**
   ```bash
   cd crud-bun
-  bun start
+  bun run native:server
   ```
 - **Node.js Server (hono):**
   ```bash
   cd crud-node-hono
-  npm start
+  npm run hono:server
   ```
 - **Deno Server (hono):**
   ```bash
   cd crud-deno-hono
-  deno task start
+  deno task hono:server
   ```
 - **Bun Server (hono):**
   ```bash
   cd crud-bun-hono
-  bun start
+  bun run hono:server
   ```
 - **Node.js Server (express):**
   ```bash
   cd crud-node-express
-  npm start
+  npm run express:server
   ```
 - **Deno Server (express):**
   ```bash
   cd crud-deno-express
-  deno task start
+  deno task express:server
   ```
 - **Bun Server (express):**
   ```bash
   cd crud-bun-express
-  bun start
+  bun run express:server
   ```
 
 Each server will run on a different port:
 - Node.js (native): `http://localhost:3001`
-- Deno (native): `http://localhost:3002`
-- Bun (native): `http://localhost:3003`
-- Node.js (hono): `http://localhost:3004`
+- Deno (native): `http://localhost:3004`
+- Bun (native): `http://localhost:3007`
+- Node.js (hono): `http://localhost:3002`
 - Deno (hono): `http://localhost:3005`
-- Bun (hono): `http://localhost:3006`
-- Node.js (express): `http://localhost:3007`
-- Deno (express): `http://localhost:3008`
+- Bun (hono): `http://localhost:3008`
+- Node.js (express): `http://localhost:3003`
+- Deno (express): `http://localhost:3006`
 - Bun (express): `http://localhost:3009`
 
 ### 4. Run the Benchmark Script
