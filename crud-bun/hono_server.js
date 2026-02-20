@@ -67,7 +67,7 @@ app.delete("/users/:id", (c) => {
   }
 
   users.delete(id);
-  return c.json(null, 204);
+  return c.body(null, 204);
 });
 
 Bun.serve({ port: PORT, fetch: app.fetch });
