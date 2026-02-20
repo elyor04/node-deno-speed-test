@@ -1,5 +1,10 @@
 {
   "scripts": {
-    "start": "node index.js"
+    "native:server": "node native_server.js",
+    "hono:server": "node hono_server.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.9",
+    "hono": "^4.12.0"
   }
 }

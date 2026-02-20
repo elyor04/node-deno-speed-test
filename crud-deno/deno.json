@@ -1,5 +1,9 @@
 {
   "tasks": {
-    "start": "deno run --allow-net index.js"
+    "native:server": "deno run --allow-net native_server.js",
+    "hono:server": "deno run --allow-net hono_server.js"
+  },
+  "imports": {
+    "hono": "jsr:@hono/hono@^4.12.0"
   }
 }
