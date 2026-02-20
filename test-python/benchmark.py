@@ -5,18 +5,15 @@ from typing import List, Dict
 import statistics
 
 URLS = [
-    # Node.js
-    "http://localhost:3001",
-    "http://localhost:3002",
-    "http://localhost:3003",
-    # Deno
-    "http://localhost:3004",
-    "http://localhost:3005",
-    "http://localhost:3006",
-    # Bun
-    "http://localhost:3007",
-    "http://localhost:3008",
-    "http://localhost:3009",
+    "http://localhost:3001",  # Node.js
+    "http://localhost:3004",  # Deno
+    "http://localhost:3007",  # Bun
+    "http://localhost:3002",  # Node.js
+    "http://localhost:3005",  # Deno
+    "http://localhost:3008",  # Bun
+    "http://localhost:3003",  # Node.js
+    "http://localhost:3006",  # Deno
+    "http://localhost:3009",  # Bun
 ]
 
 SERVER_NAMES = {
