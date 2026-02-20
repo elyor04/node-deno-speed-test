@@ -1,3 +1,5 @@
+const PORT = 3004;
+
 // Fake database
 const users = new Map();
 let nextId = 1;
@@ -94,5 +96,4 @@ const handler = async (req) => {
 };
 
 // Start server
-const PORT = 3002;
 Deno.serve({ port: PORT }, handler);

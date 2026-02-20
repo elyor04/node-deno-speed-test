@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { serve } from "@hono/node-server";
 
-const PORT = 3001;
+const PORT = 3002;
 const app = new Hono();
 
 const users = new Map();
