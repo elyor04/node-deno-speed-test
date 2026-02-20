@@ -1,5 +1,11 @@
 {
   "scripts": {
-    "start": "bun run index.js"
+    "native:server": "bun run native_server.js",
+    "hono:server": "bun run hono_server.js",
+    "express:server": "bun run express_server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "hono": "^4.12.0"
   }
 }

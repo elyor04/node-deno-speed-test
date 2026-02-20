@@ -1,3 +1,5 @@
+const PORT = 3007;
+
 // Fake database
 const users = new Map();
 let nextId = 1;
@@ -94,6 +96,5 @@ const handler = async (req) => {
 };
 
 // Start server
-const PORT = 3002;
-console.log(`🚀 Server running on http://localhost:${PORT}`);
-Deno.serve({ port: PORT }, handler);
+Bun.serve({ port: PORT, fetch: handler });
+console.log(`Server is running on http://localhost:${PORT}`);
