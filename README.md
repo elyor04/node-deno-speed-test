@@ -257,15 +257,15 @@ Open a separate terminal for each server.
 
 | Runtime | Framework | Command | Port |
 | :--- | :--- | :--- | :--- |
-| Node.js | native | `cd crud-node && npm start` | 3001 |
-| Deno | native | `cd crud-deno && deno task start` | 3004 |
-| Bun | native | `cd crud-bun && bun start` | 3007 |
-| Node.js | hono | `cd crud-node-hono && npm start` | 3002 |
-| Deno | hono | `cd crud-deno-hono && deno task start` | 3005 |
-| Bun | hono | `cd crud-bun-hono && bun start` | 3008 |
-| Node.js | express | `cd crud-node-express && npm start` | 3003 |
-| Deno | express | `cd crud-deno-express && deno task start` | 3006 |
-| Bun | express | `cd crud-bun-express && bun start` | 3009 |
+| Node.js | native | `cd crud-node && npm run native:server` | 3001 |
+| Deno | native | `cd crud-deno && deno task native:server` | 3004 |
+| Bun | native | `cd crud-bun && bun run native:server` | 3007 |
+| Node.js | hono | `cd crud-node-hono && npm run hono:server` | 3002 |
+| Deno | hono | `cd crud-deno-hono && deno task hono:server` | 3005 |
+| Bun | hono | `cd crud-bun-hono && bun run hono:server` | 3008 |
+| Node.js | express | `cd crud-node-express && npm run express:server` | 3003 |
+| Deno | express | `cd crud-deno-express && deno task express:server` | 3006 |
+| Bun | express | `cd crud-bun-express && bun run express:server` | 3009 |
 
 ### 3. Run the Benchmark
 
